@@ -1,0 +1,428 @@
+script: "/main/menu.gui_script"
+fonts {
+  name: "cool"
+  font: "/main/assets/fonts/vera_mo.font"
+}
+nodes {
+  position {
+    x: 360.0
+    y: 1043.0
+  }
+  size {
+    x: 500.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Android Native Extensions is on fire!"
+  font: "cool"
+  id: "text"
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  line_break: true
+  inherit_alpha: true
+  text_leading: 1.1
+  text_tracking: 0.1
+}
+nodes {
+  position {
+    x: 360.0
+    y: 930.59186
+  }
+  size {
+    x: 500.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Push A Button!"
+  font: "cool"
+  id: "text1"
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  line_break: true
+  inherit_alpha: true
+  text_leading: 1.1
+  text_tracking: 0.1
+}
+nodes {
+  position {
+    x: 228.06096
+    y: 332.3918
+  }
+  size {
+    x: 200.0
+    y: 80.0
+  }
+  color {
+    x: 0.32156864
+    y: 0.3254902
+    z: 0.3803922
+  }
+  type: TYPE_BOX
+  id: "bn_vibrate"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 1.8100821
+    y: -3.7514653
+  }
+  scale {
+    x: 0.8
+    y: 0.8
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Vibrate"
+  font: "cool"
+  id: "vibrate"
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  parent: "bn_vibrate"
+  inherit_alpha: true
+  text_tracking: 0.2
+}
+nodes {
+  position {
+    x: 478.06097
+    y: 332.3918
+  }
+  size {
+    x: 200.0
+    y: 80.0
+  }
+  color {
+    x: 0.32156864
+    y: 0.3254902
+    z: 0.3803922
+  }
+  type: TYPE_BOX
+  id: "bn_resource"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 1.8100821
+    y: -3.7514653
+  }
+  scale {
+    x: 0.8
+    y: 0.8
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Resource"
+  font: "cool"
+  id: "resource"
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  parent: "bn_resource"
+  inherit_alpha: true
+  text_tracking: 0.2
+}
+nodes {
+  position {
+    x: 478.06097
+    y: 192.3918
+  }
+  size {
+    x: 200.0
+    y: 80.0
+  }
+  color {
+    x: 0.32156864
+    y: 0.3254902
+    z: 0.3803922
+  }
+  type: TYPE_BOX
+  id: "bn_jar"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 1.8100821
+    y: -3.7514653
+  }
+  scale {
+    x: 0.8
+    y: 0.8
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Jar Msg"
+  font: "cool"
+  id: "jar"
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  parent: "bn_jar"
+  inherit_alpha: true
+  text_tracking: 0.2
+}
+nodes {
+  position {
+    x: 228.06096
+    y: 192.3918
+  }
+  size {
+    x: 200.0
+    y: 80.0
+  }
+  color {
+    x: 0.32156864
+    y: 0.3254902
+    z: 0.3803922
+  }
+  type: TYPE_BOX
+  id: "bn_java"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 1.8100821
+    y: -3.7514653
+  }
+  scale {
+    x: 0.8
+    y: 0.8
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Java Msg"
+  font: "cool"
+  id: "java"
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  parent: "bn_java"
+  inherit_alpha: true
+  text_tracking: 0.2
+}
+nodes {
+  position {
+    x: 228.06096
+    y: 66.28995
+  }
+  size {
+    x: 200.0
+    y: 80.0
+  }
+  color {
+    x: 0.32156864
+    y: 0.3254902
+    z: 0.3803922
+  }
+  type: TYPE_BOX
+  id: "bn_lib"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 1.8100821
+    y: -3.7514653
+  }
+  scale {
+    x: 0.8
+    y: 0.8
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Lib Msg"
+  font: "cool"
+  id: "lib"
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  parent: "bn_lib"
+  inherit_alpha: true
+  text_tracking: 0.2
+}
+nodes {
+  position {
+    x: 479.06097
+    y: 66.28995
+  }
+  size {
+    x: 200.0
+    y: 80.0
+  }
+  color {
+    x: 0.32156864
+    y: 0.3254902
+    z: 0.3803922
+  }
+  type: TYPE_BOX
+  id: "bn_toast"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 1.8100821
+    y: -3.7514653
+  }
+  scale {
+    x: 0.8
+    y: 0.8
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "toast"
+  font: "cool"
+  id: "lib1"
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  parent: "bn_toast"
+  inherit_alpha: true
+  text_tracking: 0.2
+}
+nodes {
+  position {
+    x: 360.0
+    y: 1179.0
+  }
+  size {
+    x: 500.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Custom Android Plugin"
+  font: "cool"
+  id: "text2"
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  line_break: true
+  inherit_alpha: true
+  text_leading: 1.1
+  text_tracking: 0.1
+}
+nodes {
+  position {
+    x: 479.06097
+    y: 453.28995
+  }
+  size {
+    x: 200.0
+    y: 80.0
+  }
+  color {
+    x: 0.32156864
+    y: 0.3254902
+    z: 0.3803922
+  }
+  type: TYPE_BOX
+  id: "bn_portrait"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 1.8100821
+    y: -3.7514653
+  }
+  scale {
+    x: 0.8
+    y: 0.8
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "portrait"
+  font: "cool"
+  id: "lib2"
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  parent: "bn_portrait"
+  inherit_alpha: true
+  text_tracking: 0.2
+}
+nodes {
+  position {
+    x: 229.06097
+    y: 453.28995
+  }
+  size {
+    x: 200.0
+    y: 80.0
+  }
+  color {
+    x: 0.32156864
+    y: 0.3254902
+    z: 0.3803922
+  }
+  type: TYPE_BOX
+  id: "bn_landscape"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 1.8100821
+    y: -3.7514653
+  }
+  scale {
+    x: 0.8
+    y: 0.8
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "landscape"
+  font: "cool"
+  id: "lib3"
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  parent: "bn_landscape"
+  inherit_alpha: true
+  text_tracking: 0.2
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT
