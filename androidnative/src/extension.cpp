@@ -171,6 +171,57 @@ static int Multiply(lua_State* L)
     return 1;
 }
 
+/*
+*/
+static int IsPlayingOnTV(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    AttachScope attachscope;
+    JNIEnv* env = attachscope.m_Env;
+
+    jclass cls = GetClass(env, "android/content/pm/PackageManager");
+    jmethodID hasSystemFeature = env->GetMethodID(cls, "hasSystemFeature", "(Ljava/lang/String;)Z");
+
+    jobject packageManager = env->CallObjectMethod(dmGraphics::GetNativeAndroidActivity(), env->GetMethodID(env->GetObjectClass(dmGraphics::GetNativeAndroidActivity()), "getPackageManager", "()Landroid/content/pm/PackageManager;"));
+    jstring leanbackFeature = env->NewStringUTF("android.software.leanback");
+
+    jboolean isTV = env->CallBooleanMethod(packageManager, hasSystemFeature, leanbackFeature);
+    lua_pushboolean(L, isTV);
+
+    env->DeleteLocalRef(leanbackFeature);
+    env->DeleteLocalRef(packageManager);
+
+    return 1;
+}
+
+/*
+Example
+local hasLeanback = androidnative.check_system_feature("android.software.leanback")
+
+ */
+static int CheckSystemFeature(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 1);
+    AttachScope attachscope;
+    JNIEnv* env = attachscope.m_Env;
+
+    const char* feature = luaL_checkstring(L, 1);  // Get the system feature string from the Lua script
+
+    jclass cls = GetClass(env, "android/content/pm/PackageManager");
+    jmethodID hasSystemFeature = env->GetMethodID(cls, "hasSystemFeature", "(Ljava/lang/String;)Z");
+
+    jobject packageManager = env->CallObjectMethod(dmGraphics::GetNativeAndroidActivity(), env->GetMethodID(env->GetObjectClass(dmGraphics::GetNativeAndroidActivity()), "getPackageManager", "()Landroid/content/pm/PackageManager;"));
+    jstring jFeature = env->NewStringUTF(feature);
+
+    jboolean result = env->CallBooleanMethod(packageManager, hasSystemFeature, jFeature);
+    lua_pushboolean(L, result);
+
+    env->DeleteLocalRef(jFeature);
+    env->DeleteLocalRef(packageManager);
+
+    return 1;
+}
+
 // Functions exposed to Lua
 static const luaL_reg Module_methods[] =
 {
@@ -179,8 +230,10 @@ static const luaL_reg Module_methods[] =
     {"vibrate", Vibrate},
     {"getraw", GetRaw},
     {"set_orientation", SetOrientation},
-    {"show_toast", ShowToast},  // <-- Register the new method here
+    {"show_toast", ShowToast},  
     {"multiply", Multiply},
+    {"is_playing_on_tv", IsPlayingOnTV}, 
+    {"check_system_feature", CheckSystemFeature},
     {0, 0}
 };
 
