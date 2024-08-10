@@ -29,21 +29,23 @@ class NativeExample {
         return "Message From Java!";
     }
 
+    //making a dependency will make to search on the project self package url.
     public static String GetRaw(Context context) {
-        try {
-            InputStream inputStream = context.getResources().openRawResource(R.raw.test);
-            InputStreamReader inputreader = new InputStreamReader(inputStream);
-            BufferedReader buffreader = new BufferedReader(inputreader);
-            String line;
-            StringBuilder text = new StringBuilder();
-            while ((line = buffreader.readLine()) != null) {
-                text.append(line);
-                text.append('\n');
-            }
-            return text.toString();
-        } catch (Exception e) {
-            return "io exception: " + e.getMessage();
-        }
+        return "";
+        // try {
+        //     InputStream inputStream = context.getResources().openRawResource(R.raw.test);
+        //     InputStreamReader inputreader = new InputStreamReader(inputStream);
+        //     BufferedReader buffreader = new BufferedReader(inputreader);
+        //     String line;
+        //     StringBuilder text = new StringBuilder();
+        //     while ((line = buffreader.readLine()) != null) {
+        //         text.append(line);
+        //         text.append('\n');
+        //     }
+        //     return text.toString();
+        // } catch (Exception e) {
+        //     return "io exception: " + e.getMessage();
+        // }
     }
 
     public static void showToast(Context context, String message) 
