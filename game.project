@@ -34,3 +34,6 @@ manifest = /builtins/manifests/android/AndroidManifest.xml
 default_texture_min_filter = linear
 default_texture_mag_filter = linear
 
+[library]
+include_dirs = androidnative
+
