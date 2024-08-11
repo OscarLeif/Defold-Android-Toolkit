@@ -63,23 +63,26 @@ class NativeExample {
 
     // Method to set the orientation of the device
     public static void setOrientation(Activity activity, String orientation) {
-        switch (orientation) {
-            case "portrait":
-                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                break;
-            case "reversePortrait":
-                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
-                break;
-            case "landscape":
-                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                break;
-            case "landscapeSensor":
-                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-                break;
-            default:
-                // Optional: set to unspecified if none matches
-                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-                break;
-        }
+    switch (orientation) {
+        case "portrait":
+            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            break;
+        case "reversePortrait":
+            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
+            break;
+        case "landscape":
+            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            break;
+        case "landscapeSensor":
+            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+            break;
+        case "sensorPortrait":  // Add this case for sensor-based portrait orientation
+            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+            break;
+        default:
+            // Optional: set to unspecified if none matches
+            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+            break;
+    }
     }
 }
