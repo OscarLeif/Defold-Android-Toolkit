@@ -157,6 +157,25 @@ static int InitializeNativeExample(lua_State* L) {
     return 0;
 }
 
+static int Lua_ResetPressedThisFrameStates(lua_State* L) {
+    AttachScope attachscope;
+    JNIEnv* env = attachscope.m_Env;
+    jclass native_example_class = GetClass(env, java_class);
+    jmethodID reset_pressed_this_frame_states = env->GetStaticMethodID(native_example_class, "updateButtonStates", "()V");
+    env->CallStaticVoidMethod(native_example_class, reset_pressed_this_frame_states);
+    return 0;
+}
+
+//Seems I dont need this.
+static int Lua_UpdateButtonStates(lua_State* L) {
+    AttachScope attachscope;
+    JNIEnv* env = attachscope.m_Env;
+    jclass native_example_class = GetClass(env, java_class);
+    jmethodID update_button_states = env->GetStaticMethodID(native_example_class, "updateButtonStates", "()V");
+    env->CallStaticVoidMethod(native_example_class, update_button_states);
+    return 0;
+}
+
 static int Lua_IsButtonPressed(lua_State* L)
 {    
     AttachScope attachscope;
@@ -176,6 +195,17 @@ static int Lua_WasButtonPressedThisFrame(lua_State* L) {
     jclass native_example_class = GetClass(env, java_class);
     jmethodID was_button_pressed_this_frame = env->GetStaticMethodID(native_example_class, "wasButtonPressedThisFrame", "(I)Z");
     jboolean result = env->CallStaticBooleanMethod(native_example_class, was_button_pressed_this_frame, keyCode);
+    lua_pushboolean(L, result);
+    return 1;
+}
+
+static int Lua_WasButtonReleasedThisFrame(lua_State* L) {
+    AttachScope attachscope;
+    int keyCode = luaL_checkinteger(L, 1);
+    JNIEnv* env = attachscope.m_Env;
+    jclass native_example_class = GetClass(env, java_class);
+    jmethodID was_button_released_this_frame = env->GetStaticMethodID(native_example_class, "wasButtonReleasedThisFrame", "(I)Z");
+    jboolean result = env->CallStaticBooleanMethod(native_example_class, was_button_released_this_frame, keyCode);
     lua_pushboolean(L, result);
     return 1;
 }
@@ -272,8 +302,10 @@ static const luaL_reg Module_methods[] =
     {"is_playing_on_tv", IsPlayingOnTV}, 
     {"check_system_feature", CheckSystemFeature},
     {"initialize", InitializeNativeExample},
-    {"is_button_pressed", Lua_IsButtonPressed},
     {"was_button_pressed_this_frame", Lua_WasButtonPressedThisFrame},
+    {"was_button_released_this_frame", Lua_WasButtonReleasedThisFrame},  // For button release tracking
+    {"is_button_pressed", Lua_IsButtonPressed},                         // Check if the button is held
+    {"reset_pressed_this_frame_states", Lua_ResetPressedThisFrameStates},  
     {0, 0}
 };
 

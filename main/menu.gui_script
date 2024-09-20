@@ -1,6 +1,35 @@
 local KEYCODE_BUTTON_A = 96
 local KEYCODE_BUTTON_B = 97
+local KEYCODE_BUTTON_Y = 100
 
+-- Table to track button states
+local button_states = {
+    current = {},
+    previous = {},
+}
+
+
+-- Function to update button states
+local function update_button_states()
+    -- Loop over all the buttons you want to track (e.g., key codes for gamepad buttons)
+    local buttons = { KEYCODE_BUTTON_A, KEYCODE_BUTTON_B } -- Replace with actual key codes
+
+    for _, key_code in ipairs(buttons) do
+        -- Store the current state of the button
+        button_states.previous[key_code] = button_states.current[key_code] or false
+        button_states.current[key_code] = androidnative.is_button_pressed(key_code)
+    end
+end
+
+-- Function to check if a button was pressed this frame
+local function was_button_pressed_this_frame(key_code)
+    return button_states.current[key_code] and not button_states.previous[key_code]
+end
+
+-- Function to check if a button was released this frame
+local function was_button_released_this_frame(key_code)
+    return not button_states.current[key_code] and button_states.previous[key_code]
+end
 
 function init(self)
     --local res = androidnative.dostuff()
@@ -51,23 +80,44 @@ function on_input(self, action_id, action)
     end
 end
 
+local A_pressed=false
+
 function update(dt)
-    local sys_info = sys.get_sys_info()
-    if sys_info.system_name == "Android" then
-        if androidnative ~= nil then
-            androidnative.update_button_state()
+    -- Check if the androidnative module exists
+    if androidnative ~= nil then
 
-            if androidnative.was_button_pressed_this_frame(KEYCODE_BUTTON_A) then
-                print("Button A was pressed this frame")
-                androidnative.show_toast("Button A pressed this frame");
-                -- Handle Button A pressed event
-            end
+        update_button_states()
 
-            if androidnative.was_button_pressed_this_frame(KEYCODE_BUTTON_B) then
-                print("Button B was pressed this frame")
-                androidnative.show_toast("Button B pressed this frame");
-                -- Handle Button B pressed event
-            end
+        if was_button_pressed_this_frame(KEYCODE_BUTTON_B) then
+            print("BUTTON B was Pressed")
         end
+        
+        if was_button_released_this_frame(KEYCODE_BUTTON_B)then
+            print ("BUTTON B was Released")
+        end
+
+        //JAVA SIDE SEEMS TO NOT WORK FINE
+        //ALSO WE FORGOT TO SET THE Variant build to DEBUG
+        //Probably this could work but with that mistake will need to check again.
+        -- //NOT WORKING
+        -- if androidnative.was_button_pressed_this_frame(KEYCODE_BUTTON_Y) then
+        --     print("BUTTON Y was Pressed")
+        -- end
+
+        -- //NOT WORKING
+        -- if(androidnative.was_button_released_this_frame(KEYCODE_BUTTON_Y)) then
+        --     print("BUTTON Y WAs Released")
+        -- end
+
+        -- Check if the A button is pressed and was not already pressed
+        if androidnative.is_button_pressed(KEYCODE_BUTTON_A) and not A_pressed then
+            print("KEYCODE A PRESSED")
+            A_pressed = true  -- Mark that the button is pressed
+        elseif not androidnative.is_button_pressed(KEYCODE_BUTTON_A) and A_pressed then
+            A_pressed=false
+            print("KEYCODE A RELEASED")
+        end
+
+        androidnative.reset_pressed_this_frame_states()
     end
 end
