@@ -13,6 +13,8 @@ width = 720
 height = 1280
 samples = 2
 high_dpi = 0
+display_device_info = 1
+fullscreen = 1
 
 [physics]
 scale = 0.02
@@ -28,7 +30,9 @@ bundle_identifier = com.defold.androidnativeext
 
 [android]
 package = ata.games.defold.android
-manifest = /builtins/manifests/android/AndroidManifest.xml
+manifest = /manifest/android/AndroidManifest.xml
+immersive_mode = 1
+display_cutout = 1
 
 [graphics]
 default_texture_min_filter = linear

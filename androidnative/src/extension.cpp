@@ -143,6 +143,43 @@ static int ShowToast(lua_State* L)
     return 0;
 }
 
+static int InitializeNativeExample(lua_State* L) {
+    AttachScope attachscope;
+    JNIEnv* env = attachscope.m_Env;
+
+    jobject activity = dmGraphics::GetNativeAndroidActivity();    
+    // jclass native_example_class = env->FindClass("ata/games/defold/android/NativeExample");
+    jclass native_example_class = GetClass(env, java_class);
+
+    jmethodID set_activity = env->GetStaticMethodID(native_example_class, "setMainActivity", "(Landroid/app/Activity;)V");
+    env->CallStaticVoidMethod(native_example_class, set_activity, activity);
+
+    return 0;
+}
+
+static int Lua_IsButtonPressed(lua_State* L)
+{    
+    AttachScope attachscope;
+    int keyCode = luaL_checkinteger(L,1);
+    JNIEnv* env = attachscope.m_Env;
+    jclass native_example_class = GetClass(env, java_class);
+    jmethodID is_button_pressed = env->GetStaticMethodID(native_example_class, "isButtonPressed", "(I)Z");
+    jboolean result = env->CallStaticBooleanMethod(native_example_class, is_button_pressed, keyCode);
+    lua_pushboolean(L, result);
+    return 1;
+}
+
+static int Lua_WasButtonPressedThisFrame(lua_State* L) {
+    AttachScope attachscope;
+    int keyCode = luaL_checkinteger(L, 1);
+    JNIEnv* env = attachscope.m_Env;
+    jclass native_example_class = GetClass(env, java_class);
+    jmethodID was_button_pressed_this_frame = env->GetStaticMethodID(native_example_class, "wasButtonPressedThisFrame", "(I)Z");
+    jboolean result = env->CallStaticBooleanMethod(native_example_class, was_button_pressed_this_frame, keyCode);
+    lua_pushboolean(L, result);
+    return 1;
+}
+
 static int GetRaw(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -234,6 +271,9 @@ static const luaL_reg Module_methods[] =
     {"multiply", Multiply},
     {"is_playing_on_tv", IsPlayingOnTV}, 
     {"check_system_feature", CheckSystemFeature},
+    {"initialize", InitializeNativeExample},
+    {"is_button_pressed", Lua_IsButtonPressed},
+    {"was_button_pressed_this_frame", Lua_WasButtonPressedThisFrame},
     {0, 0}
 };
 
