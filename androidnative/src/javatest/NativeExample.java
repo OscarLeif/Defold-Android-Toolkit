@@ -19,10 +19,8 @@ class NativeExample {
     private static Activity mainActivity;
     private static final String TAG = "NativeExample";
 
-   // Maps to track current and previous button states
+    // Maps to track current and previous button states
     private static Map<Integer, Boolean> currentButtonStates = new HashMap<>();
-    private static Map<Integer, Boolean> wasPressedThisFrameStates = new HashMap<>();
-    private static Map<Integer, Boolean> wasReleasedThisFrameStates = new HashMap<>();
 
     public static void setMainActivity(Activity activity) {
         mainActivity = activity;
@@ -41,49 +39,29 @@ class NativeExample {
     }
 
     public static boolean handleKeyEvent(int keyCode, KeyEvent event) {
-    // Log.d(TAG, "Key event: " + keyCode + ", Action: " + event.getAction());
-    if (event.getAction() == KeyEvent.ACTION_DOWN) {
-        if (!currentButtonStates.getOrDefault(keyCode, false)) {
-            currentButtonStates.put(keyCode, true);
-            wasPressedThisFrameStates.put(keyCode, true);
+        // Log.d(TAG, "Key event: " + keyCode + ", Action: " + event.getAction());
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (!currentButtonStates.getOrDefault(keyCode, false)) {
+                currentButtonStates.put(keyCode, true);                
+            }
+            return true;
+        } else if (event.getAction() == KeyEvent.ACTION_UP) {
+            currentButtonStates.put(keyCode, false);
+            return true;
         }
-        return true;
-    } else if (event.getAction() == KeyEvent.ACTION_UP) {
-        currentButtonStates.put(keyCode, false);
-        wasReleasedThisFrameStates.put(keyCode, true);
-        return true;
+        return false;
     }
-    return false;
-}
 
     public static void printButtonStates(Map<Integer, Boolean> buttonStates) {
-    for (Map.Entry<Integer, Boolean> entry : buttonStates.entrySet()) {
-        System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
-    }
-}
-
-    // This method should be called every frame to reset "pressed this frame" states
-    public static void updateButtonStates() {
-        wasPressedThisFrameStates.clear();
-        wasReleasedThisFrameStates.clear();
-    }
-
-    // Returns true if the button was pressed this frame
-    public static boolean wasButtonPressedThisFrame(int keyCode) {
-        return wasPressedThisFrameStates.getOrDefault(keyCode, false);
-    }
-
-    // Returns true if the button was released this frame
-    public static boolean wasButtonReleasedThisFrame(int keyCode) {
-        return wasReleasedThisFrameStates.getOrDefault(keyCode, false);
-    }
+        for (Map.Entry<Integer, Boolean> entry : buttonStates.entrySet()) {
+            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
+        }
+    }    
 
     // Returns true if the button is currently pressed
     public static boolean isButtonPressed(int keyCode) {
-        // Log.d(TAG, "get button pressed " + keyCode);
-        // printButtonStates(currentButtonStates)         ;
         return currentButtonStates.getOrDefault(keyCode, false);
-    }    
+    }
 
     public static void vibratePhone(Context context, int vibrateMilliSeconds) {
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
@@ -97,7 +75,7 @@ class NativeExample {
     }
 
     public static String getRaw(Context context) {
-        return "";  // Commented-out functionality
+        return ""; // Commented-out functionality
     }
 
     public static void showToast(Context context, String message) {
