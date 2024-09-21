@@ -29,10 +29,11 @@ bundle_identifier = com.defold.androidnativeext
 bundle_identifier = com.defold.androidnativeext
 
 [android]
-package = ata.games.defold.android
+package = atagames.android
 manifest = /manifest/android/AndroidManifest.xml
 immersive_mode = 1
 display_cutout = 1
+input_method = HiddenInputField
 
 [graphics]
 default_texture_min_filter = linear

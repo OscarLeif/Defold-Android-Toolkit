@@ -2,7 +2,7 @@
 <!-- BEGIN_INCLUDE(manifest) -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        package="{{android.package}}"
+        package="atagames.android"
         android:versionCode="{{android.version_code}}"
         android:versionName="{{project.version}}"
         android:installLocation="auto">
@@ -22,7 +22,7 @@
         <meta-data android:name="android.max_aspect" android:value="2.1" />
         <meta-data android:name="android.notch_support" android:value="true"/>
 
-        <activity android:name="com.dynamo.android.DefoldActivity"
+        <activity android:name="ata.games.defold.android.CustomActivity"
                 android:label="{{project.title}}"
                 android:configChanges="fontScale|keyboard|keyboardHidden|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
                 android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
@@ -35,6 +35,17 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name="com.dynamo.android.DefoldActivity"
+                android:label="{{project.title}}"
+                android:configChanges="fontScale|keyboard|keyboardHidden|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
+                android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+                android:screenOrientation="sensor"
+                android:exported="true"
+                android:launchMode="singleTask">
+            <meta-data android:name="android.app.lib_name"
+                    android:value="{{exe-name}}" />            
         </activity>
 
     </application>
