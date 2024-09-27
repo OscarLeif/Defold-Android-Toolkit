@@ -86,6 +86,8 @@ function update(dt)
     -- Check if the androidnative module exists
     if androidnative ~= nil then
 
+        androidnative.pool_gamepad_axes()
+
         -- Check if the A button is pressed and was not already pressed
         if androidnative.is_button_pressed(KEYCODE_BUTTON_A) and not A_pressed then
             print("KEYCODE A PRESSED")
@@ -98,5 +100,8 @@ function update(dt)
         if androidnative.is_button_pressed(KEYCODE_BUTTON_Y) then
             print("KEYCODE Y is PRESS")
         end
+
+        -- print("Axis X: " .. androidnative.get_axis_x)
+        
     end
 end

@@ -169,6 +169,21 @@ static int Lua_IsButtonPressed(lua_State* L)
     return 1;
 }
 
+static int Lua_GetAxisX(lua_State* L)
+{
+    AttachScope attachscope;
+    JNIEnv* env = attachscope.m_Env;
+    // Get the class reference for NativeExample
+    jclass native_example_class = GetClass(env, java_class);    
+    // Get the method ID for getAxisX
+    jmethodID get_axis_x = env->GetStaticMethodID(native_example_class, "getAxisX", "()F");    
+    // Call the static method to get the axis X value
+    jfloat axisX = env->CallStaticFloatMethod(native_example_class, get_axis_x);    
+    // Push the float value onto the Lua stack
+    lua_pushnumber(L, axisX);    
+    return 1; // Return the number of results
+}
+
 static int GetRaw(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
@@ -248,6 +263,24 @@ static int CheckSystemFeature(lua_State* L)
     return 1;
 }
 
+static int LuaPollGamepadAxes(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    AttachScope attachscope;
+    JNIEnv* env = attachscope.m_Env;
+
+    jclass cls = GetClass(env, java_class);
+    jmethodID poll_method = env->GetStaticMethodID(cls, "pollGamepadAxes", "()V");
+    env->CallStaticVoidMethod(cls, poll_method);
+    return 0;
+}
+
+static int LuaGetAxisX(lua_State* L)
+{
+
+    return 1;
+}
+
 // Functions exposed to Lua
 static const luaL_reg Module_methods[] =
 {
@@ -262,6 +295,8 @@ static const luaL_reg Module_methods[] =
     {"check_system_feature", CheckSystemFeature},
     {"initialize", InitializeNativeExample},
     {"is_button_pressed", Lua_IsButtonPressed},
+    {"pool_gamepad_axes", LuaPollGamepadAxes}, //Poll must be called first
+    {"get_axis_x", Lua_GetAxisX}, 
     {0, 0}
 };
 
