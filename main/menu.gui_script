@@ -85,23 +85,17 @@ local A_pressed = false
 function update(dt)
     -- Check if the androidnative module exists
     if androidnative ~= nil then
-
-        androidnative.pool_gamepad_axes()
-
-        -- Check if the A button is pressed and was not already pressed
-        if androidnative.is_button_pressed(KEYCODE_BUTTON_A) and not A_pressed then
-            print("KEYCODE A PRESSED")
-            A_pressed = true  -- Mark that the button is pressed
-        elseif not androidnative.is_button_pressed(KEYCODE_BUTTON_A) and A_pressed then
-            A_pressed=false
-            print("KEYCODE A RELEASED")
+        -- Check key events
+        local keycode, action = androidnative.get_latest_key_event()
+        if keycode then
+            print("LUA Key pressed:", keycode, "Action:", action)
         end
 
-        if androidnative.is_button_pressed(KEYCODE_BUTTON_Y) then
-            print("KEYCODE Y is PRESS")
+        -- Check axis events (for joystick/gamepad axes)
+        local axis_x, axis_y, hat_x, hat_y = androidnative.get_latest_axis_event()
+        if axis_x and math.abs(axis_x)> 0 and math.abs(axis_y) > 0 then            
+            print("LUA Joystick Axis X:", axis_x, "Y:", axis_y)
+            print("LUA Hat Switch X:", hat_x, "Y:", hat_y)
         end
-
-        -- print("Axis X: " .. androidnative.get_axis_x)
-        
     end
 end
