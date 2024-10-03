@@ -94,8 +94,13 @@ function update(dt)
         -- Check axis events (for joystick/gamepad axes)
         local axis_x, axis_y, hat_x, hat_y = androidnative.get_latest_axis_event()
         if axis_x and math.abs(axis_x)> 0 and math.abs(axis_y) > 0 then            
-            print("LUA Joystick Axis X:", axis_x, "Y:", axis_y)
-            print("LUA Hat Switch X:", hat_x, "Y:", hat_y)
+            print("LUA Joystick Axis X:", axis_x, "Y:", axis_y)        
+        end
+        
+        if hat_x ~= nill and hat_y ~=nill then 
+            if(math.abs(hat_x)>0 or math.abs(hat_y))then                 
+                print("LUA Hat Switch X:", hat_x, "Y:", hat_y)
+            end
         end
     end
 end

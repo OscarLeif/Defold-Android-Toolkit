@@ -140,10 +140,7 @@ static int Vibrate(lua_State* L)
 {
     AttachScope attachscope;
     JNIEnv* env = attachscope.m_Env;
-
     int duration = luaL_checkint(L, 1);
-
-    // jclass cls = GetClass(env, "com.defold.androidnativeext.NativeExample");
     jclass cls = GetClass(env, java_class);
     
     jmethodID vibrate_method = env->GetStaticMethodID(cls, "vibratePhone", "(Landroid/content/Context;I)V");
@@ -156,9 +153,7 @@ static int SetOrientation(lua_State* L)
 {
     AttachScope attachscope;
     JNIEnv* env = attachscope.m_Env;
-
     const char* orientation = luaL_checkstring(L, 1);
-
     jclass cls = GetClass(env, java_class);
     jmethodID method = env->GetStaticMethodID(cls, "setOrientation", "(Landroid/app/Activity;Ljava/lang/String;)V");
 
@@ -187,27 +182,6 @@ static int ShowToast(lua_State* L)
     env->DeleteLocalRef(jMessage);
 
     return 0;
-}
-
-// Function to access the latest input event from Lua
-static int Lua_get_latest_input_event(lua_State* L) {
-    AInputEvent* event = g_lastInputEvent;
-
-    if (event == NULL) {
-        // dmLogInfo("No input event available");
-        lua_pushnil(L);
-        return 1;
-    }
-
-    // Example: Get keycode and return it to Lua
-    if (AInputEvent_getType(event) == AINPUT_EVENT_TYPE_KEY) {
-        int32_t keycode = AKeyEvent_getKeyCode(event);
-        lua_pushinteger(L, keycode);
-    } else {
-        lua_pushnil(L);  // Return nil if no key event is available
-    }
-
-    return 1;
 }
 
 static int Lua_get_latest_key_event(lua_State* L) {
@@ -277,26 +251,11 @@ static int Lua_get_latest_axis_event(lua_State* L) {
     return 1;
 }
 
-static int InitializeNativeExample(lua_State* L) {
-    AttachScope attachscope;
-    JNIEnv* env = attachscope.m_Env;
-
-    jobject activity = dmGraphics::GetNativeAndroidActivity();    
-    jclass native_example_class = GetClass(env, java_class);
-
-    jmethodID set_activity = env->GetStaticMethodID(native_example_class, "setMainActivity", "(Landroid/app/Activity;)V");
-    env->CallStaticVoidMethod(native_example_class, set_activity, activity);
-
-    return 0;
-}
-
 static int GetRaw(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
     AttachScope attachscope;
     JNIEnv* env = attachscope.m_Env;
-
-    // jclass cls = GetClass(env, "com.defold.androidnativeext.NativeExample");
     jclass cls = GetClass(env, java_class);
 
     jmethodID method = env->GetStaticMethodID(cls, "GetRaw", "(Landroid/content/Context;)Ljava/lang/String;");
@@ -310,10 +269,8 @@ static int GetRaw(lua_State* L)
 static int Multiply(lua_State* L)
 {
     DM_LUA_STACK_CHECK(L, 1);
-
     lua_Number a = luaL_checknumber(L, 1);
     lua_Number b = luaL_checknumber(L, 2);
-
     lua_pushnumber(L, a * b);
     return 1;
 }
@@ -381,8 +338,6 @@ static const luaL_reg Module_methods[] =
     {"multiply", Multiply},
     {"is_playing_on_tv", IsPlayingOnTV}, 
     {"check_system_feature", CheckSystemFeature},
-    {"initialize", InitializeNativeExample},
-    {"get_latest_input_event", Lua_get_latest_input_event},
     {"get_latest_key_event", Lua_get_latest_key_event},
     {"get_latest_axis_event", Lua_get_latest_axis_event},
     {0, 0}
